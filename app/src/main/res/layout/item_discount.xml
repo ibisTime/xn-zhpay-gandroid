@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/intervalColor"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/layout_bg"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@mipmap/discount_used_bg"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="90dp">
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="100dp"
+            android:layout_height="match_parent">
+            <TextView
+                android:text="折扣券"
+                android:textSize="18sp"
+                android:textColor="@color/fontColor_white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_marginLeft="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/txt_name"
+                    android:text="折扣券"
+                    android:textSize="16sp"
+                    android:textColor="@color/fontColor_pink"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/txt_time"
+                    android:layout_marginTop="9dp"
+                    android:text="有效期: "
+                    android:textSize="13sp"
+                    android:textColor="@color/fontColor_support"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/img_zhang"
+                android:background="@mipmap/discount_timeout"
+                android:layout_marginTop="18sp"
+                android:layout_marginRight="11dp"
+                android:layout_gravity="right"
+                android:layout_width="56.5dp"
+                android:layout_height="56.5dp" />
+
+        </FrameLayout>
+
+
+
+    </LinearLayout>
+
+</LinearLayout>
