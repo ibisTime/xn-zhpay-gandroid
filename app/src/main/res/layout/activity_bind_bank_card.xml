@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.zhenghui.zhqb.gift.activity.BindBankCardActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/white" >
+
+        <LinearLayout
+            android:id="@+id/layout_back"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageButton
+                android:background="@mipmap/back_yellow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="添加银行卡"
+            android:textColor="@color/fontColor_yellow"
+            android:textSize="17sp" />
+    </RelativeLayout>
+
+    <View
+        android:background="@color/lineColor"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <TextView
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:text="请绑定持卡人本人的银行卡"
+        android:textSize="12sp"
+        android:textColor="#999999"
+        android:background="#f5f5f5"
+        android:layout_width="match_parent"
+        android:layout_height="41dp" />
+
+    <LinearLayout
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:text="持卡人"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:textSize="15sp"
+            android:textColor="@color/fontColor_gray"
+            android:layout_width="100dp"
+            android:layout_height="match_parent" />
+
+        <EditText
+            android:id="@+id/edt_name"
+            android:layout_marginRight="15dp"
+            android:hint="请输入姓名"
+            android:textSize="15sp"
+            android:textColorHint="@color/fontColor_hint"
+            android:textColor="#333333"
+            android:background="@null"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <View
+        android:background="@color/lineColor"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"/>
+
+
+    <LinearLayout
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:text="银行"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:textSize="15sp"
+            android:textColor="@color/fontColor_gray"
+            android:layout_width="100dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/txt_bankName"
+            android:hint="请选择银行"
+            android:textSize="15sp"
+            android:gravity="center_vertical"
+            android:textColorHint="@color/fontColor_hint"
+            android:textColor="#333333"
+            android:background="@null"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_marginRight="15dp"
+            android:background="@mipmap/more_down"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <View
+        android:background="@color/lineColor"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"/>
+
+    <LinearLayout
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:text="卡号"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:textSize="15sp"
+            android:textColor="@color/fontColor_gray"
+            android:layout_width="100dp"
+            android:layout_height="match_parent" />
+
+        <EditText
+            android:id="@+id/edt_cardId"
+            android:layout_marginRight="15dp"
+            android:hint="银行卡号"
+            android:textSize="15sp"
+            android:textColorHint="@color/fontColor_hint"
+            android:textColor="#333333"
+            android:background="@null"
+            android:inputType="number"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <View
+        android:background="@color/lineColor"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"/>
+
+
+
+    <TextView
+        android:id="@+id/txt_confirm"
+        android:gravity="center"
+        android:text="确定"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/corners_yellow"
+        android:layout_width="match_parent"
+        android:layout_height="45dp" />
+
+</LinearLayout>

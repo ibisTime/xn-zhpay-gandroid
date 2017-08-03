@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="44dp">
+
+        <LinearLayout
+            android:id="@+id/layout_back"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:background="@mipmap/back_oy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/fontColor_oy"
+            android:text="待发货详情"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+
+    <View
+        android:background="@color/lineColor_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <TextView
+        android:id="@+id/txt_order"
+        android:text="订单号:  "
+        android:textSize="12sp"
+        android:textColor="@color/fontColor_gray"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/txt_receiver"
+        android:text="收件人:  "
+        android:textSize="12sp"
+        android:textColor="@color/fontColor_gray"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/txt_re_mobile"
+        android:text="联系电话:  "
+        android:textSize="12sp"
+        android:textColor="@color/fontColor_gray"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/txt_re_address"
+        android:text="收件地址:  "
+        android:textSize="12sp"
+        android:textColor="@color/fontColor_gray"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/txt_note"
+        android:visibility="gone"
+        android:text="买家嘱咐:  "
+        android:textSize="12sp"
+        android:textColor="@color/fontColor_gray"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:text="货单"
+        android:textSize="15sp"
+        android:textColor="@color/fontColor_oy"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/txt_good_name"
+            android:text="商品:  "
+            android:textSize="12sp"
+            android:textColor="@color/fontColor_gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/txt_parameter_name"
+            android:text="规格:  "
+            android:layout_marginLeft="15dp"
+            android:textSize="12sp"
+            android:textColor="@color/fontColor_gray"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/txt_number"
+            android:text="数量"
+            android:textSize="12sp"
+            android:textColor="@color/fontColor_gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txt_total_number"
+        android:textSize="13sp"
+        android:textColor="@color/fontColor_gray"
+        android:gravity="right"
+        android:text="共计0件货物"
+        android:layout_marginTop="32dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/layout_dfh"
+            android:visibility="gone"
+            android:orientation="vertical"
+            android:layout_marginTop="34dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="快递"
+                    android:textSize="15sp"
+                    android:textColor="@color/fontColor_oy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:id="@+id/edt_express"
+                    android:background="@drawable/corners_logistics"
+                    android:textSize="13sp"
+                    android:hint="输入快递公司"
+                    android:layout_marginLeft="20dp"
+                    android:textColorHint="@color/fontColor_support"
+                    android:textColor="@color/fontColor_gray"
+                    android:gravity="center_vertical"
+                    android:inputType="text"
+                    android:paddingLeft="10dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:layout_marginTop="28dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edt_number"
+                    android:background="@drawable/corners_logistics"
+                    android:textSize="13sp"
+                    android:hint="输入快递单号"
+                    android:textColorHint="@color/fontColor_support"
+                    android:textColor="@color/fontColor_gray"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:inputType="number"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp" />
+
+                <Button
+                    android:id="@+id/txt_send"
+                    android:gravity="center"
+                    android:background="@drawable/corners_btn_oy"
+                    android:text="发货"
+                    android:textSize="13sp"
+                    android:textColor="@color/white"
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="70dp"
+                    android:layout_height="30dp" />
+                
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_cancel"
+                android:gravity="center"
+                android:textSize="14sp"
+                android:textColor="@color/fontColor_oy"
+                android:text="因特殊原因无法发货取消订单"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/corners_btn_oy_cancel"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/layout_dsh"
+            android:visibility="gone"
+            android:orientation="vertical"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/txt_dsh_logistics"
+                android:text="顺丰快递"
+                android:textSize="12sp"
+                android:textColor="@color/fontColor_gray"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/txt_dsh_send_time"
+                android:layout_marginTop="13dp"
+                android:text="发货时间"
+                android:textSize="12sp"
+                android:textColor="@color/fontColor_gray"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:textColor="@color/fontColor_oy"
+                android:gravity="center"
+                android:textSize="11sp"
+                android:text="等待用户收货,用户忘记收货则以发货时间起7天后自动确认交易"
+                android:layout_marginTop="95dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_ywc"
+            android:visibility="gone"
+            android:orientation="vertical"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/txt_ywc_logistics"
+                android:text="顺丰快递"
+                android:textSize="12sp"
+                android:textColor="@color/fontColor_gray"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/txt_ywc_send_time"
+                android:layout_marginTop="13dp"
+                android:text="发货时间"
+                android:textSize="12sp"
+                android:textColor="@color/fontColor_gray"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/txt_ywc_status"
+                android:layout_marginTop="13dp"
+                android:text="用户已确认收货"
+                android:textSize="12sp"
+                android:textColor="@color/fontColor_gray"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/txt_ywc_get_time"
+                android:layout_marginTop="13dp"
+                android:text="收货时间"
+                android:textSize="12sp"
+                android:textColor="@color/fontColor_gray"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:visibility="gone"
+                android:layout_marginTop="68dp"
+                android:text="交易完成"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:textColor="@color/fontColor_oy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</LinearLayout>

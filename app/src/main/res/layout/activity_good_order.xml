@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="#f5f5f5"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <RelativeLayout
+        android:background="@color/fontColor_oy"
+        android:layout_width="match_parent"
+        android:layout_height="44dp">
+
+        <LinearLayout
+            android:id="@+id/layout_back"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:background="@mipmap/back_white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/fontColor_white"
+            android:text="商品订单管理"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+
+    <View
+        android:background="@color/lineColor_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <LinearLayout
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="42dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/txt_dfh"
+                android:gravity="center"
+                android:text="待发货订单"
+                android:textSize="15sp"
+                android:textColor="@color/fontColor_oy"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+
+            <View
+                android:id="@+id/line_dfh"
+                android:background="@color/fontColor_oy"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/txt_dsh"
+                android:gravity="center"
+                android:text="待收货订单"
+                android:textSize="15sp"
+                android:textColor="@color/fontColor_gray"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+
+            <View
+                android:id="@+id/line_dsh"
+                android:background="@color/fontColor_white"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/txt_ywc"
+                android:gravity="center"
+                android:text="已完成订单"
+                android:textSize="15sp"
+                android:textColor="@color/fontColor_gray"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+
+            <View
+                android:id="@+id/line_ywc"
+                android:background="@color/fontColor_white"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:background="@color/lineColor_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1px"/>
+
+    <com.zhenghui.zhqb.gift.util.RefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/layout_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/list_order"
+            android:dividerHeight="0dp"
+            android:divider="@color/lineColor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </ListView>
+
+    </com.zhenghui.zhqb.gift.util.RefreshLayout>
+
+</LinearLayout>

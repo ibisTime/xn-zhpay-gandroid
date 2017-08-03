@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/layout_bankBg"
+        android:background="@mipmap/back_default"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="130dp">
+
+        <ImageView
+            android:id="@+id/img_bankCart"
+            android:background="@mipmap/logo_defalut"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            />
+
+        <TextView
+            android:id="@+id/txt_name"
+            android:text="工商银行"
+            android:textSize="16dp"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/img_bankCart"
+            android:layout_toEndOf="@+id/img_bankCart"
+            android:layout_marginStart="15dp"
+            android:layout_toRightOf="@+id/img_bankCart"
+            android:layout_marginLeft="15dp" />
+
+        <TextView
+            android:id="@+id/txt_type"
+            android:layout_marginTop="1dp"
+            android:text="储蓄卡"
+            android:textSize="14dp"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_name"
+            android:layout_alignStart="@+id/txt_name"
+            android:layout_alignLeft="@+id/txt_name" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp"
+            android:layout_below="@+id/txt_type"
+            android:layout_alignStart="@+id/txt_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/txt_name">
+
+            <TextView
+                android:text="**** **** **** "
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/txt_number"
+                android:text="4728"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        >
+
+        <LinearLayout
+            android:id="@+id/layout_back"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:background="@mipmap/back_pink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/fontColor_pink"
+            android:text="收益详情"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/txt_history"
+            android:textSize="15sp"
+            android:gravity="center"
+            android:text="历史记录"
+            android:paddingRight="15dp"
+            android:paddingLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/fontColor_pink" />
+
+    </RelativeLayout>
+
+    <View
+        android:background="@color/lineColor_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <com.zhenghui.zhqb.gift.util.RefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipe_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/list_rights"
+
+            android:background="@color/intervalColor"
+            android:dividerHeight="0dp"
+            android:divider="@color/intervalColor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></ListView>
+
+    </com.zhenghui.zhqb.gift.util.RefreshLayout>
+
+</LinearLayout>

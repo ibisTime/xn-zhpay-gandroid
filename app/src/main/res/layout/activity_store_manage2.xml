@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:background="@color/pink"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        >
+
+        <LinearLayout
+            android:id="@+id/layout_back"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageButton
+                android:background="@mipmap/back_white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/fontColor_white"
+            android:text="店铺管理"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/txt_edit"
+            android:text="编辑"
+            android:textSize="15sp"
+            android:gravity="center"
+            android:paddingRight="15dp"
+            android:paddingLeft="15dp"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/fontColor_white"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_store"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_marginLeft="15dp"
+            android:text="店铺装修"
+            android:textColor="@color/pink"
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/txt_status"
+            android:layout_below="@+id/textView1"
+            android:layout_marginTop="6dp"
+            android:layout_marginLeft="15dp"
+            android:text="店铺装修"
+            android:textColor="@color/fontColor_gray"
+            android:textSize="12sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.kyleduo.switchbutton.SwitchButton
+            android:layout_alignParentRight="true"
+            android:id="@+id/switchButton"
+            style="@style/SwitchButtonMD"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+    <View
+        android:background="@color/lineColor"
+        android:layout_width="match_parent"
+        android:layout_height="1px"/>
+
+    <RelativeLayout
+        android:id="@+id/layout_level"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_marginLeft="15dp"
+            android:text="店铺升级"
+            android:textColor="@color/pink"
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/txt_type"
+            android:layout_below="@+id/textView2"
+            android:layout_marginTop="6dp"
+            android:layout_marginLeft="15dp"
+            android:text="您还是普通商家，无法获得额外利益"
+            android:textColor="@color/fontColor_gray"
+            android:textSize="12sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/txt_level_up"
+            android:layout_toRightOf="@+id/textView2"
+            android:layout_marginLeft="15dp"
+            android:text="免费在线升级"
+            android:textColor="@color/fontColor_gray"
+            android:textSize="12sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <View
+        android:background="@color/lineColor"
+        android:layout_width="match_parent"
+        android:layout_height="1px"/>
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_marginLeft="15dp"
+            android:text="折扣券管理"
+            android:textColor="@color/pink"
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_marginTop="6dp"
+            android:layout_below="@+id/textView3"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txt_sale"
+                android:text="已售出  0"
+                android:textColor="@color/fontColor_gray"
+                android:textSize="12sp"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/txt_used"
+                android:gravity="center"
+                android:text="已使用  0"
+                android:textColor="@color/fontColor_gray"
+                android:textSize="12sp"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/txt_due"
+                android:gravity="right"
+                android:text="已过期未使用  0"
+                android:textColor="@color/fontColor_gray"
+                android:textSize="12sp"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <View
+        android:background="@color/lineColor"
+        android:layout_width="match_parent"
+        android:layout_height="1px"/>
+
+    <TextView
+        android:background="@color/white"
+        android:paddingLeft="15dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="18dp"
+        android:text="我的收益"
+        android:textColor="@color/pink"
+        android:textSize="14sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:background="@color/pink"
+        android:layout_width="match_parent"
+        android:layout_height="1px"/>
+
+    <LinearLayout
+        android:id="@+id/layout_fhq"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="90dp">
+
+            <LinearLayout
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="¥"
+                        android:textSize="18sp"
+                        android:textColor="@color/fontColor_pink"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/txt_earnings"
+                        android:text="0.00"
+                        android:textSize="27sp"
+                        android:textColor="@color/fontColor_pink"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:text="补贴额度"
+                    android:textSize="12sp"
+                    android:layout_marginTop="14dp"
+                    android:textColor="@color/fontColor_gray"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <View
+                android:background="@color/pink"
+                android:layout_width="1px"
+                android:layout_height="match_parent"/>
+
+            <LinearLayout
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/txt_fhq"
+                        android:text="0"
+                        android:textSize="27sp"
+                        android:textColor="@color/fontColor_pink"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:text="个"
+                        android:textSize="18sp"
+                        android:textColor="@color/fontColor_pink"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:text="分红权总数"
+                    android:textSize="12sp"
+                    android:layout_marginTop="14dp"
+                    android:textColor="@color/fontColor_gray"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:background="@color/pink"
+            android:layout_width="match_parent"
+            android:layout_height="1px"/>
+
+        <LinearLayout
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="90dp">
+
+            <LinearLayout
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="¥"
+                        android:textSize="18sp"
+                        android:textColor="@color/fontColor_pink"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/txt_my_earnings"
+                        android:text="0.00"
+                        android:textSize="27sp"
+                        android:textColor="@color/fontColor_pink"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:text="您的收益金额"
+                    android:textSize="12sp"
+                    android:layout_marginTop="14dp"
+                    android:textColor="@color/fontColor_gray"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <View
+                android:background="@color/pink"
+                android:layout_width="1px"
+                android:layout_height="match_parent"/>
+
+            <LinearLayout
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/txt_my_fhq"
+                        android:text="0"
+                        android:textSize="27sp"
+                        android:textColor="@color/fontColor_pink"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:text="个"
+                        android:textSize="18sp"
+                        android:textColor="@color/fontColor_pink"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:text="您的分红权总数"
+                    android:textSize="12sp"
+                    android:layout_marginTop="14dp"
+                    android:textColor="@color/fontColor_gray"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:background="@color/pink"
+            android:layout_width="match_parent"
+            android:layout_height="1px"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txt_deal"
+        android:background="@color/white"
+        android:paddingLeft="15dp"
+        android:paddingTop="18dp"
+        android:paddingBottom="18dp"
+        android:text="商家使用说明及签约协议"
+        android:textColor="@color/pink"
+        android:textSize="12sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
