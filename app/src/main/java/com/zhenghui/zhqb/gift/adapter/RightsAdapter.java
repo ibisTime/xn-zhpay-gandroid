@@ -78,7 +78,7 @@ public class RightsAdapter extends BaseAdapter {
 
         holder.txtUnclaimed.setText(NumberUtil.doubleFormatMoney(list.get(i).getProfitAmount() - list.get(i).getBackAmount()));
         holder.txtReceived.setText(NumberUtil.doubleFormatMoney(list.get(i).getBackAmount()));
-        holder.txtCode.setText("FHQID"+list.get(i).getCode().substring(list.get(i).getCode().length() - 6, list.get(i).getCode().length()));
+        holder.txtCode.setText("ID"+list.get(i).getCode().substring(list.get(i).getCode().length() - 9, list.get(i).getCode().length()));
 //        holder.txtCode.setText(list.get(i).getCode().substring(0,12));
         SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         if (list.get(i).getCreateDatetime() != null) {

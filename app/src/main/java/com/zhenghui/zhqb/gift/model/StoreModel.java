@@ -11,6 +11,7 @@ public class StoreModel {
     private String slogan;
     private String advPic;
     private String pic;
+    private String license;
     private String description;
     private String province;
     private String city;
@@ -39,6 +40,14 @@ public class StoreModel {
     private String systemCode;
     private String refereeMobile;
     private List<?> storeTickets;
+
+    public String getLicense() {
+        return license;
+    }
+
+    public void setLicense(String license) {
+        this.license = license;
+    }
 
     public String getRemark() {
         return remark;

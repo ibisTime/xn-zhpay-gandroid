@@ -40,12 +40,24 @@ public class WalletActivity extends MyBaseActivity {
     TextView txtFrb;
     @BindView(R.id.layout_frb)
     LinearLayout layoutFrb;
+    @BindView(R.id.txt_btb)
+    TextView txtBtb;
+    @BindView(R.id.layout_btb)
+    LinearLayout layoutBtb;
+    @BindView(R.id.txt_hkb)
+    TextView txtHkb;
+    @BindView(R.id.layout_hkb)
+    LinearLayout layoutHkb;
 
     private double frb;
     private double lpq;
+    private double btb;
+    private double hkb;
 
+    private String btbCode;
     private String frbCode;
     private String lpqCode;
+    private String hkbCode;
 
     private List<WalletModel> list;
 
@@ -64,7 +76,7 @@ public class WalletActivity extends MyBaseActivity {
         list = new ArrayList<>();
     }
 
-    @OnClick({R.id.layout_back, R.id.layout_lpq, R.id.layout_frb})
+    @OnClick({R.id.layout_back, R.id.layout_lpq, R.id.layout_frb, R.id.layout_btb, R.id.layout_hkb})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_back:
@@ -83,6 +95,20 @@ public class WalletActivity extends MyBaseActivity {
                         .putExtra("code", lpqCode)
                         .putExtra("accountAmount", lpq)
                         .putExtra("accountName", "lpq"));
+                break;
+
+            case R.id.layout_btb:
+                startActivity(new Intent(this, BillActivity.class)
+                        .putExtra("code", btbCode)
+                        .putExtra("accountAmount", btb)
+                        .putExtra("accountName", "btb"));
+                break;
+
+            case R.id.layout_hkb:
+                startActivity(new Intent(this, BillActivity.class)
+                        .putExtra("code", hkbCode)
+                        .putExtra("accountAmount", hkb)
+                        .putExtra("accountName", "btb"));
                 break;
         }
     }
@@ -147,6 +173,20 @@ public class WalletActivity extends MyBaseActivity {
                     lpq = model.getAmount();
 
                     lpqCode = model.getAccountNumber();
+                    break;
+
+                case "BTB": // 补贴
+                    txtBtb.setText(NumberUtil.doubleFormatMoney(model.getAmount()));
+                    btb = model.getAmount();
+
+                    btbCode = model.getAccountNumber();
+                    break;
+
+                case "HKB": // 货款
+                    txtHkb.setText(NumberUtil.doubleFormatMoney(model.getAmount()));
+                    hkb = model.getAmount();
+
+                    hkbCode = model.getAccountNumber();
                     break;
             }
         }

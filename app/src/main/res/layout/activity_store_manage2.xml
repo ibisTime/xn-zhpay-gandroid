@@ -200,6 +200,56 @@
         android:layout_width="match_parent"
         android:layout_height="1px"/>
 
+    <RelativeLayout
+        android:id="@+id/layout_deal"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_centerVertical="true"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="签约合同"
+                android:textColor="@color/pink"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView4"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="6dp"
+                android:text="电子合同"
+                android:textColor="@color/fontColor_gray"
+                android:textSize="12sp"
+                android:id="@+id/textView5" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_centerVertical="true"
+            android:layout_width="10dp"
+            android:layout_height="17dp"
+            android:background="@mipmap/more_right"
+            android:layout_marginEnd="15dp"
+            android:layout_alignParentEnd="true" />
+
+
+    </RelativeLayout>
+
+    <View
+        android:background="@color/lineColor"
+        android:layout_width="match_parent"
+        android:layout_height="1px"/>
+
     <TextView
         android:background="@color/white"
         android:paddingLeft="15dp"
@@ -211,18 +261,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <View
-        android:background="@color/pink"
-        android:layout_width="match_parent"
-        android:layout_height="1px"/>
-
     <LinearLayout
         android:id="@+id/layout_fhq"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <View
+            android:background="@color/pink"
+            android:layout_width="match_parent"
+            android:layout_height="1px"/>
+
         <LinearLayout
+            android:id="@+id/layout_show"
             android:background="@color/white"
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -300,7 +351,7 @@
                 </LinearLayout>
 
                 <TextView
-                    android:text="分红权总数"
+                    android:text="补贴名额"
                     android:textSize="12sp"
                     android:layout_marginTop="14dp"
                     android:textColor="@color/fontColor_gray"
@@ -334,16 +385,16 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:text="¥"
-                        android:textSize="18sp"
+                        android:id="@+id/txt_my_fhq"
+                        android:text="0"
+                        android:textSize="27sp"
                         android:textColor="@color/fontColor_pink"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
                     <TextView
-                        android:id="@+id/txt_my_earnings"
-                        android:text="0.00"
-                        android:textSize="27sp"
+                        android:text="个"
+                        android:textSize="18sp"
                         android:textColor="@color/fontColor_pink"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -351,7 +402,7 @@
                 </LinearLayout>
 
                 <TextView
-                    android:text="您的收益金额"
+                    android:text="您的补贴名额"
                     android:textSize="12sp"
                     android:layout_marginTop="14dp"
                     android:textColor="@color/fontColor_gray"
@@ -377,16 +428,16 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/txt_my_fhq"
-                        android:text="0"
-                        android:textSize="27sp"
+                        android:text="¥"
+                        android:textSize="18sp"
                         android:textColor="@color/fontColor_pink"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
                     <TextView
-                        android:text="个"
-                        android:textSize="18sp"
+                        android:id="@+id/txt_my_earnings"
+                        android:text="0.00"
+                        android:textSize="27sp"
                         android:textColor="@color/fontColor_pink"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -394,7 +445,7 @@
                 </LinearLayout>
 
                 <TextView
-                    android:text="您的分红权总数"
+                    android:text="您的补贴额度"
                     android:textSize="12sp"
                     android:layout_marginTop="14dp"
                     android:textColor="@color/fontColor_gray"
@@ -405,23 +456,11 @@
 
         </LinearLayout>
 
-        <View
-            android:background="@color/pink"
-            android:layout_width="match_parent"
-            android:layout_height="1px"/>
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/txt_deal"
-        android:background="@color/white"
-        android:paddingLeft="15dp"
-        android:paddingTop="18dp"
-        android:paddingBottom="18dp"
-        android:text="商家使用说明及签约协议"
-        android:textColor="@color/pink"
-        android:textSize="12sp"
+    <View
+        android:background="@color/pink"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="1px"/>
+
+</LinearLayout>
 
 </LinearLayout>

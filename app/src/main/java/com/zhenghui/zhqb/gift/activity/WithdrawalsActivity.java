@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.Spanned;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -35,7 +37,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.zhenghui.zhqb.gift.util.Constant.CODE_802015;
-import static com.zhenghui.zhqb.gift.util.Constant.CODE_802027;
+import static com.zhenghui.zhqb.gift.util.Constant.CODE_802029;
 import static com.zhenghui.zhqb.gift.util.Constant.CODE_802750;
 
 public class WithdrawalsActivity extends MyBaseActivity {
@@ -51,15 +53,18 @@ public class WithdrawalsActivity extends MyBaseActivity {
     EditText edtPrice;
     @BindView(R.id.txt_canUsePrice)
     TextView txtCanUsePrice;
-    @BindView(R.id.txt_confirm)
-    TextView txtConfirm;
+    @BindView(R.id.txt_tip4)
+    TextView txtTip4;
     @BindView(R.id.edt_repassword)
     EditText edtRepassword;
+    @BindView(R.id.txt_confirm)
+    TextView txtConfirm;
     @BindView(R.id.txt_tip)
     TextView txtTip;
     @BindView(R.id.txt_tip2)
     TextView txtTip2;
-
+    @BindView(R.id.txt_tip3)
+    TextView txtTip3;
 
     private List<BankModel> list;
     private List<MyBankCardModel> bankCardList;
@@ -72,6 +77,8 @@ public class WithdrawalsActivity extends MyBaseActivity {
 
     private String bankName;
     private String bankcardNumber;
+
+    private double USERQXFL;
 
 
     @Override
@@ -126,6 +133,27 @@ public class WithdrawalsActivity extends MyBaseActivity {
                 return null;
             }
         }});
+
+        edtPrice.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if(!editable.toString().trim().equals("")){
+                   txtTip4.setText("* 本次提现手续费:"+NumberUtil.doubleFormatGps((Double.parseDouble(editable.toString()) * USERQXFL)));
+                }else {
+                    txtTip4.setText("* 本次提现手续费:0");
+                }
+            }
+        });
     }
 
     @OnClick({R.id.layout_back, R.id.layout_bankCard, R.id.txt_confirm})
@@ -244,24 +272,25 @@ public class WithdrawalsActivity extends MyBaseActivity {
 
         JSONObject object = new JSONObject();
         try {
+            object.put("type", "G_RMB");
+            object.put("token", userInfoSp.getString("token", null));
             object.put("systemCode", appConfigSp.getString("systemCode", null));
             object.put("companyCode", appConfigSp.getString("systemCode", null));
-            object.put("token", userInfoSp.getString("token", null));
-            object.put("key", "BUSERMONTIMES");
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        new Xutil().post(CODE_802027, object.toString(), new Xutil.XUtils3CallBackPost() {
+        new Xutil().post(CODE_802029, object.toString(), new Xutil.XUtils3CallBackPost() {
             @Override
             public void onSuccess(String result) {
 
                 try {
                     JSONObject jsonObject = new JSONObject(result);
+                    txtTip.setText("1.每月最大取现次数为"+jsonObject.getString("USER_MONTIMES")+"次");
+                    txtTip2.setText("2.提现金额是" + jsonObject.getString("USER_QXBS") + "的倍数，单笔最高" + jsonObject.getString("USER_QXDBZDJE"));
+                    txtTip3.setText("3.取现手续费:" + (jsonObject.getDouble("USER_QXFL")*100)+"%");
 
-                    txtTip.setText("* 每月最大取现次数为" + jsonObject.getString("cvalue") + "次");
-
-                    getTip2();
+                    USERQXFL = jsonObject.getDouble("USER_QXFL");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -280,84 +309,6 @@ public class WithdrawalsActivity extends MyBaseActivity {
         });
     }
 
-    private void getTip2() {
-
-        JSONObject object = new JSONObject();
-        try {
-            object.put("systemCode", appConfigSp.getString("systemCode", null));
-            object.put("companyCode", appConfigSp.getString("systemCode", null));
-            object.put("token", userInfoSp.getString("token", null));
-            object.put("key", "BUSERQXBS");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        new Xutil().post(CODE_802027, object.toString(), new Xutil.XUtils3CallBackPost() {
-            @Override
-            public void onSuccess(String result) {
-
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-
-                    txtTip2.setText("* 提现金额是" + jsonObject.getString("cvalue"));
-
-                    getTip3();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void onTip(String tip) {
-                Toast.makeText(WithdrawalsActivity.this, tip, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onError(String error, boolean isOnCallback) {
-                Toast.makeText(WithdrawalsActivity.this, "无法连接服务器，请检查网络", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void getTip3() {
-
-        JSONObject object = new JSONObject();
-        try {
-            object.put("systemCode", appConfigSp.getString("systemCode", null));
-            object.put("companyCode", appConfigSp.getString("systemCode", null));
-            object.put("token", userInfoSp.getString("token", null));
-            object.put("key", "QXDBZDJE");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        new Xutil().post(CODE_802027, object.toString(), new Xutil.XUtils3CallBackPost() {
-            @Override
-            public void onSuccess(String result) {
-
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-
-                    txtTip2.setText(txtTip2.getText()+ "的倍数，单笔最高" + jsonObject.getString("cvalue"));
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void onTip(String tip) {
-                Toast.makeText(WithdrawalsActivity.this, tip, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onError(String error, boolean isOnCallback) {
-                Toast.makeText(WithdrawalsActivity.this, "无法连接服务器，请检查网络", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     private void withdrawal() {
 
@@ -372,7 +323,7 @@ public class WithdrawalsActivity extends MyBaseActivity {
             object.put("amount", (int) (Double.parseDouble(edtPrice.getText().toString().trim()) * 1000));
             object.put("payCardNo", bankcardNumber);
             object.put("payCardInfo", bankName);
-            object.put("applyNote", "");
+            object.put("applyNote", "Android礼品商端取现");
             object.put("applyUser", userInfoSp.getString("userId", null));
             object.put("tradePwd", edtRepassword.getText().toString());
         } catch (JSONException e) {

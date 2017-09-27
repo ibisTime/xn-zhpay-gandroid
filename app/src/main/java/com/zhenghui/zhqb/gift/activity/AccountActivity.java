@@ -16,7 +16,6 @@ import com.zhenghui.zhqb.gift.MyApplication;
 import com.zhenghui.zhqb.gift.MyBaseActivity;
 import com.zhenghui.zhqb.gift.R;
 import com.zhenghui.zhqb.gift.model.UserModel;
-import com.zhenghui.zhqb.gift.services.UpdateService;
 import com.zhenghui.zhqb.gift.util.CacheUtil;
 import com.zhenghui.zhqb.gift.util.Xutil;
 
@@ -31,7 +30,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.zhenghui.zhqb.gift.util.Constant.CODE_805056;
-import static com.zhenghui.zhqb.gift.util.Constant.CODE_807717;
+import static com.zhenghui.zhqb.gift.util.Constant.CODE_807718;
+import static com.zhenghui.zhqb.gift.util.UpdateUtil.startWeb;
 
 public class AccountActivity extends MyBaseActivity {
 
@@ -247,26 +247,26 @@ public class AccountActivity extends MyBaseActivity {
     private void getVersion() {
         JSONObject object = new JSONObject();
         try {
-            object.put("ckey", "bVersionCode");
+            object.put("type", "android_g");
             object.put("systemCode", appConfigSp.getString("systemCode", null));
             object.put("companyCode", appConfigSp.getString("systemCode", null));
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-
-        new Xutil().post(CODE_807717, object.toString(), new Xutil.XUtils3CallBackPost() {
+        new Xutil().post(CODE_807718, object.toString(), new Xutil.XUtils3CallBackPost() {
             @Override
             public void onSuccess(String result) {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
 
-                    int versionCode = Integer.parseInt(jsonObject.getString("cvalue"));
+                    String note = jsonObject.getString("note");
+                    String url = jsonObject.getString("downloadUrl");
+                    String force = jsonObject.getString("forceUpdate");
+                    int versionCode = Integer.parseInt(jsonObject.getString("version"));
 
                     if (versionCode > getVersionCode()) {
-                        update();
-                    } else {
-                        Toast.makeText(AccountActivity.this, "当前已是最新版本哦", Toast.LENGTH_SHORT).show();
+                        update(note, url, force);
                     }
 
                 } catch (JSONException e) {
@@ -286,19 +286,29 @@ public class AccountActivity extends MyBaseActivity {
         });
     }
 
-    private void update() {
-        new AlertDialog.Builder(this).setTitle("提示")
-                .setMessage("发现新版本请及时更新")
+    private void update(String msg, final String url, String force) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle("提示")
+                .setMessage(msg)
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
-                        startService(new Intent(AccountActivity.this, UpdateService.class)
-                                .putExtra("appname", "zhlps-release")
-                                .putExtra("appurl", "http://m.zhenghuijituan.com/app/zhlps-release.apk"));
+                        startWeb(AccountActivity.this,url);
+
+                        finish();
+                        System.exit(0);
 
                     }
-                }).setNegativeButton("取消", null).show();
+                })
+                .setCancelable(false);
+
+
+        if(force.equals("1")){ // 强制更新
+            builder.show();
+        }else {
+            builder.setNegativeButton("取消", null).show();
+        }
     }
 
     /**

@@ -13,6 +13,7 @@ import com.google.gson.reflect.TypeToken;
 import com.zhenghui.zhqb.gift.MyBaseActivity;
 import com.zhenghui.zhqb.gift.R;
 import com.zhenghui.zhqb.gift.model.OrderModel;
+import com.zhenghui.zhqb.gift.util.NumberUtil;
 import com.zhenghui.zhqb.gift.util.Xutil;
 
 import org.json.JSONArray;
@@ -80,10 +81,15 @@ public class OrderDetailActivity extends MyBaseActivity {
     LinearLayout layoutYwc;
     @BindView(R.id.txt_note)
     TextView txtNote;
+    @BindView(R.id.txt_price)
+    TextView txtPrice;
+    @BindView(R.id.txt_yunfei)
+    TextView txtYunfei;
 
     String code;
 
     OrderModel model;
+
 
 
     @Override
@@ -164,8 +170,8 @@ public class OrderDetailActivity extends MyBaseActivity {
         txtReceiver.setText("收件人: " + model.getReceiver());
         txtReMobile.setText("联系电话: " + model.getReMobile());
         txtReAddress.setText("收件地址: " + model.getReAddress());
-        if(model.getApplyNote() != null){
-            if(!model.getApplyNote().equals("")){
+        if (model.getApplyNote() != null) {
+            if (!model.getApplyNote().equals("")) {
                 txtNote.setVisibility(View.VISIBLE);
                 txtNote.setText("买家嘱咐: " + model.getApplyNote());
             }
@@ -173,12 +179,16 @@ public class OrderDetailActivity extends MyBaseActivity {
 
 
         txtGoodName.setText(model.getProduct().getName());
-        if(model.getProductSpecsName() !=  null){
+        if (model.getProductSpecsName() != null) {
             txtParameterName.setText("规格: " + model.getProductSpecsName());
-        }else {
+        } else {
             txtParameterName.setText("规格: 无");
         }
         txtNumber.setText("数量*" + model.getQuantity());
+
+        txtPrice.setText(NumberUtil.doubleFormatMoney(model.getAmount1()));
+        txtYunfei.setText(NumberUtil.doubleFormatMoney(model.getYunfei()));
+
         txtTotalNumber.setText("共计" + 1 + "件货物");
 
         if (model.getStatus().equals("2")) { // 待发货
@@ -191,7 +201,7 @@ public class OrderDetailActivity extends MyBaseActivity {
             txtDshLogistics.setText(model.getLogisticsCompany() + ": " + model.getLogisticsCode());
 
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            if(model.getDeliveryDatetime() != null){
+            if (model.getDeliveryDatetime() != null) {
                 Date sendTime = new Date(model.getDeliveryDatetime());
                 txtDshSendTime.setText("发货时间: " + format.format(sendTime));
             }
@@ -202,11 +212,11 @@ public class OrderDetailActivity extends MyBaseActivity {
 
             txtYwcLogistics.setText(model.getLogisticsCompany() + ": " + model.getLogisticsCode());
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            if(model.getDeliveryDatetime() != null){
+            if (model.getDeliveryDatetime() != null) {
                 Date sendTime = new Date(model.getDeliveryDatetime());
                 txtYwcSendTime.setText("发货时间: " + format.format(sendTime));
             }
-            if(model.getUpdateDatetime() != null){
+            if (model.getUpdateDatetime() != null) {
                 Date getTime = new Date(model.getUpdateDatetime());
                 txtYwcGetTime.setText("收货时间: " + format.format(getTime));
             }

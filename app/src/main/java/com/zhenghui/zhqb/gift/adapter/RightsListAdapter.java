@@ -23,8 +23,10 @@ public class RightsListAdapter extends BaseAdapter {
     private List<RightsListModel> list;
     private Context context;
     private ViewHolder holder;
+    private String type;
 
-    public RightsListAdapter(Context context, List<RightsListModel> list) {
+    public RightsListAdapter(Context context, List<RightsListModel> list, String type) {
+        this.type = type;
         this.list = list;
         this.context = context;
     }
@@ -60,6 +62,10 @@ public class RightsListAdapter extends BaseAdapter {
     }
 
     private void setView(int position) {
+        if (type.equals("BTQ")){
+            holder.txtTimeTitle.setText("补贴时间:");
+            holder.txtPriceTitle.setText("补贴金额:");
+        }
         holder.txtPrice.setText(NumberUtil.doubleFormatMoney(list.get(position).getToAmount()) + setAssets(position));
 
         SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -96,6 +102,10 @@ public class RightsListAdapter extends BaseAdapter {
         TextView txtPrice;
         @BindView(R.id.txt_time)
         TextView txtTime;
+        @BindView(R.id.txt_price_title)
+        TextView txtPriceTitle;
+        @BindView(R.id.txt_time_title)
+        TextView txtTimeTitle;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

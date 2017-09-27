@@ -27,14 +27,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.zhenghui.zhqb.gift.util.Constant.CODE_802502;
 import static com.zhenghui.zhqb.gift.util.Constant.CODE_808219;
-import static com.zhenghui.zhqb.gift.util.Constant.CODE_808275;
+import static com.zhenghui.zhqb.gift.util.Constant.CODE_808459;
+import static com.zhenghui.zhqb.gift.util.Constant.CODE_808917;
 
 public class StoreManage2Activity extends MyBaseActivity {
 
+
     @BindView(R.id.layout_back)
     LinearLayout layoutBack;
+    @BindView(R.id.txt_edit)
+    TextView txtEdit;
     @BindView(R.id.textView1)
     TextView textView1;
     @BindView(R.id.txt_status)
@@ -59,6 +62,12 @@ public class StoreManage2Activity extends MyBaseActivity {
     TextView txtUsed;
     @BindView(R.id.txt_due)
     TextView txtDue;
+    @BindView(R.id.textView4)
+    TextView textView4;
+    @BindView(R.id.textView5)
+    TextView textView5;
+    @BindView(R.id.layout_deal)
+    RelativeLayout layoutDeal;
     @BindView(R.id.txt_earnings)
     TextView txtEarnings;
     @BindView(R.id.txt_fhq)
@@ -69,8 +78,8 @@ public class StoreManage2Activity extends MyBaseActivity {
     TextView txtMyFhq;
     @BindView(R.id.layout_fhq)
     LinearLayout layoutFhq;
-    @BindView(R.id.txt_deal)
-    TextView txtDeal;
+    @BindView(R.id.layout_show)
+    LinearLayout layoutShow;
 
     private ArrayList<MyStoreModel> list;
 
@@ -84,8 +93,8 @@ public class StoreManage2Activity extends MyBaseActivity {
         initEvent();
 
         getData();
-        getTotal();
         getProperty();
+        getIsShow();
     }
 
     private void inits() {
@@ -110,7 +119,7 @@ public class StoreManage2Activity extends MyBaseActivity {
         });
     }
 
-    @OnClick({R.id.layout_back, R.id.txt_deal, R.id.txt_edit, R.id.layout_fhq, R.id.layout_store})
+    @OnClick({R.id.layout_back, R.id.layout_deal, R.id.txt_edit, R.id.layout_fhq, R.id.layout_store})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_back:
@@ -122,53 +131,17 @@ public class StoreManage2Activity extends MyBaseActivity {
                 break;
 
             case R.id.layout_fhq:
-                startActivity(new Intent(this, RightsActivity.class));
+                startActivity(new Intent(this, SubsidyActivity.class));
                 break;
 
-            case R.id.txt_deal:
-                startActivity(new Intent(this, RichTextActivity.class).putExtra("ckey","store_sign_statement"));
+            case R.id.layout_deal:
+                startActivity(new Intent(this, RichTextActivity.class).putExtra("ckey", "store_sign_statement"));
                 break;
 
             case R.id.layout_store:
                 startActivity(new Intent(this, StoreActivity.class).putExtra("isModifi", true));
                 break;
         }
-    }
-
-    private void getTotal() {
-        JSONObject object = new JSONObject();
-        try {
-            object.put("accountNumber", "A2017100000000000002");
-            object.put("token", userInfoSp.getString("token", ""));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        new Xutil().post(CODE_802502, object.toString(), new Xutil.XUtils3CallBackPost() {
-            @Override
-            public void onSuccess(String result) {
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-
-                    txtEarnings.setText(NumberUtil.doubleFormatMoney(jsonObject.getDouble("amount")));
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-            }
-
-            @Override
-            public void onTip(String tip) {
-                Toast.makeText(StoreManage2Activity.this, tip, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onError(String error, boolean isOnCallback) {
-                Toast.makeText(StoreManage2Activity.this, "无法连接服务器，请检查网络", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     private void getData() {
@@ -249,20 +222,20 @@ public class StoreManage2Activity extends MyBaseActivity {
             e.printStackTrace();
         }
 
-        new Xutil().post(CODE_808275, object.toString(), new Xutil.XUtils3CallBackPost() {
+        new Xutil().post(CODE_808459, object.toString(), new Xutil.XUtils3CallBackPost() {
             @Override
             public void onSuccess(String result) {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
 
-                    txtMyEarnings.setText(NumberUtil.doubleFormatMoney(jsonObject.getDouble("totalStockProfit")));
-                    txtFhq.setText(jsonObject.getInt("totalStockCount") + "");
+                    txtFhq.setText(jsonObject.getInt("poolStockCount")+"");
                     txtMyFhq.setText(jsonObject.getInt("stockCount") + "");
+                    txtEarnings.setText(NumberUtil.doubleFormatMoney(jsonObject.getDouble("poolAmount")));
+                    txtMyEarnings.setText(NumberUtil.doubleFormatMoney(jsonObject.getDouble("totalProfitAmount")));
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
 
             }
 
@@ -291,6 +264,48 @@ public class StoreManage2Activity extends MyBaseActivity {
             @Override
             public void onSuccess(String result) {
                 getData();
+            }
+
+            @Override
+            public void onTip(String tip) {
+                Toast.makeText(StoreManage2Activity.this, tip, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(String error, boolean isOnCallback) {
+                Toast.makeText(StoreManage2Activity.this, "无法连接服务器，请检查网络", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void getIsShow() {
+        JSONObject object = new JSONObject();
+        try {
+            object.put("key", "POOL_VISUAL");
+            object.put("systemCode", appConfigSp.getString("systemCode", null));
+            object.put("companyCode", appConfigSp.getString("systemCode", null));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        new Xutil().post(CODE_808917, object.toString(), new Xutil.XUtils3CallBackPost() {
+            @Override
+            public void onSuccess(String result) {
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+
+                    if(jsonObject.getString("cvalue").equals("1")){ // 1显示
+                        layoutShow.setVisibility(View.VISIBLE);
+                    }else {
+                        layoutShow.setVisibility(View.GONE);
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
             }
 
             @Override

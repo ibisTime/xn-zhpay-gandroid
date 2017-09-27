@@ -7,8 +7,8 @@ android {
         applicationId "com.zhenghui.zhqb.gift"
         minSdkVersion 19
         targetSdkVersion 24
-        versionCode 1
-        versionName "4.0.0"
+        versionCode 17
+        versionName "4.2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         // Enabling multidex support.
@@ -32,8 +32,8 @@ android {
 //                abiFilters "armeabi", "armeabi-v7a", "arm64-v8a" // 保留这三种架构的CPU
 //                abiFilters "armeabi-v7a" // 保留这种架构的CPU
                 abiFilters "armeabi" // 保留这种架构的CPU
-            }
-        }
+    }
+}
     }
     sourceSets {
         main {

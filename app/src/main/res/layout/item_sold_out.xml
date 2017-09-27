@@ -22,7 +22,7 @@
             android:layout_height="40dp">
 
             <TextView
-                android:text="编辑,重新上架"
+                android:text="还原"
                 android:textSize="12sp"
                 android:gravity="center"
                 android:textColor="@color/fontColor_rose"

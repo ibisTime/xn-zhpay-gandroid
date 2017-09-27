@@ -41,15 +41,16 @@
 
         <TextView
             android:id="@+id/txt_btn"
-            android:textSize="14sp"
-            android:textColor="@color/fontColor_rose"
-            android:paddingRight="15dp"
-            android:paddingLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:text="发布"
             android:gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textColor="@color/fontColor_rose"
+            android:textSize="14sp" />
 
     </RelativeLayout>
 

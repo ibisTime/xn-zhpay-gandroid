@@ -48,8 +48,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.zhenghui.zhqb.gift.R.id.edt_referrer;
-import static com.zhenghui.zhqb.gift.R.id.layout_type;
 import static com.zhenghui.zhqb.gift.util.Constant.CODE_808007;
 import static com.zhenghui.zhqb.gift.util.Constant.CODE_808201;
 import static com.zhenghui.zhqb.gift.util.Constant.CODE_808203;
@@ -60,14 +58,11 @@ import static com.zhenghui.zhqb.gift.util.ImageUtil.camara;
 
 public class StoreActivity extends MyBaseActivity {
 
+
     @BindView(R.id.layout_back)
     LinearLayout layoutBack;
     @BindView(R.id.edt_name)
     EditText edtName;
-    @BindView(R.id.txt_type)
-    TextView txtType;
-    @BindView(layout_type)
-    LinearLayout layoutType;
     @BindView(R.id.txt_province)
     TextView txtProvince;
     @BindView(R.id.txt_city)
@@ -84,7 +79,7 @@ public class StoreActivity extends MyBaseActivity {
     EditText edtBookMobile;
     @BindView(R.id.edt_smsMobile)
     EditText edtSmsMobile;
-    @BindView(edt_referrer)
+    @BindView(R.id.edt_referrer)
     EditText edtReferrer;
     @BindView(R.id.edt_slogan)
     EditText edtSlogan;
@@ -96,6 +91,14 @@ public class StoreActivity extends MyBaseActivity {
     TextView txtGps;
     @BindView(R.id.layout_gps)
     LinearLayout layoutGps;
+    @BindView(R.id.img_license)
+    ImageView imgLicense;
+    @BindView(R.id.layout_license)
+    FrameLayout layoutLicense;
+    @BindView(R.id.txt_type)
+    TextView txtType;
+    @BindView(R.id.layout_type)
+    LinearLayout layoutType;
     @BindView(R.id.txt_use)
     TextView txtUse;
     @BindView(R.id.txt_nonuse)
@@ -112,10 +115,8 @@ public class StoreActivity extends MyBaseActivity {
     TextView textView;
     @BindView(R.id.layout_confirm)
     LinearLayout layoutConfirm;
-    @BindView(R.id.layout_deal)
-    LinearLayout layoutDeal;
 
-    private boolean isCover = true;
+    private String picFlag = "";
     private boolean isModifi = false;
 
     private int type = -1;
@@ -126,6 +127,7 @@ public class StoreActivity extends MyBaseActivity {
     private String city;
     private String district;
 
+    private String licenseUrl = "";
     private String coverUrl = "";
     private String latitude = "";
     private String longitude = "";
@@ -171,7 +173,7 @@ public class StoreActivity extends MyBaseActivity {
     }
 
     @OnClick({R.id.layout_back, R.id.layout_type, R.id.layout_address, R.id.layout_advPic,
-            R.id.layout_gps, R.id.img_add, R.id.layout_confirm, R.id.layout_deal})
+            R.id.img_license, R.id.layout_gps, R.id.img_add, R.id.layout_confirm})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_back:
@@ -187,7 +189,12 @@ public class StoreActivity extends MyBaseActivity {
                 break;
 
             case R.id.layout_advPic:
-                isCover = true;
+                picFlag = "advPic";
+                choosePhoto(view);
+                break;
+
+            case R.id.img_license:
+                picFlag = "license";
                 choosePhoto(view);
                 break;
 
@@ -196,17 +203,17 @@ public class StoreActivity extends MyBaseActivity {
                 break;
 
             case R.id.img_add:
-                if(listPicUrl.size() < 3){
-                    isCover = false;
+                if (listPicUrl.size() < 3) {
+                    picFlag = "pic";
                     choosePhoto(view);
-                }else {
+                } else {
                     Toast.makeText(this, "图片最多只能选择三张", Toast.LENGTH_SHORT).show();
                 }
 
                 break;
 
             case R.id.layout_confirm:
-                if(flag){
+                if (flag) {
                     if (checkData()) {
                         commit();
                     }
@@ -214,9 +221,6 @@ public class StoreActivity extends MyBaseActivity {
 
                 break;
 
-            case R.id.layout_deal:
-                startActivity(new Intent(this, RichTextActivity.class).putExtra("ckey","store_sign_statement"));
-                break;
         }
     }
 
@@ -438,11 +442,19 @@ public class StoreActivity extends MyBaseActivity {
         if (data != null) {
             if (requestCode == ImageUtil.RESULT_LOAD_IMAGE) {
                 if (data.getData() != null) {
-                    if (isCover) {
-                        Glide.with(StoreActivity.this).load(album(StoreActivity.this, data)).into(imgCover);
-                    } else {
-                        listPic.add(album(StoreActivity.this, data));
-                        recyclerViewAdapter.notifyDataSetChanged();
+                    switch (picFlag){
+                        case "advPic":
+                            Glide.with(StoreActivity.this).load(album(StoreActivity.this, data)).into(imgCover);
+                            break;
+
+                        case "license":
+                            Glide.with(StoreActivity.this).load(album(StoreActivity.this, data)).into(imgLicense);
+                            break;
+
+                        case "pic":
+                            listPic.add(album(StoreActivity.this, data));
+                            recyclerViewAdapter.notifyDataSetChanged();
+                            break;
                     }
 
                     new QiNiuUtil(StoreActivity.this, album(StoreActivity.this, data), null).qiNiu(new QiNiuUtil.QiNiuCallBack() {
@@ -450,10 +462,18 @@ public class StoreActivity extends MyBaseActivity {
                         public void onSuccess(String key, ResponseInfo info, JSONObject res) {
                             System.out.println("key=" + key);
 
-                            if (isCover) {
-                                coverUrl = key;
-                            } else {
-                                listPicUrl.add(key);
+                            switch (picFlag){
+                                case "advPic":
+                                    coverUrl = key;
+                                    break;
+
+                                case "license":
+                                    licenseUrl = key;
+                                    break;
+
+                                case "pic":
+                                    listPicUrl.add(key);
+                                    break;
                             }
 
                         }
@@ -462,21 +482,38 @@ public class StoreActivity extends MyBaseActivity {
 
             } else if (requestCode == ImageUtil.RESULT_CAMARA_IMAGE) {
                 if (data.getExtras() != null) {
-                    if (isCover) {
-                        Glide.with(StoreActivity.this).load(camara(StoreActivity.this, data)).into(imgCover);
-                    } else {
-                        listPic.add(camara(StoreActivity.this, data));
-                        recyclerViewAdapter.notifyDataSetChanged();
 
+                    switch (picFlag){
+                        case "advPic":
+                            Glide.with(StoreActivity.this).load(camara(StoreActivity.this, data)).into(imgCover);
+                            break;
+
+                        case "license":
+                            Glide.with(StoreActivity.this).load(camara(StoreActivity.this, data)).into(imgLicense);
+                            break;
+
+                        case "pic":
+                            listPic.add(camara(StoreActivity.this, data));
+                            recyclerViewAdapter.notifyDataSetChanged();
+                            break;
                     }
 
                     new QiNiuUtil(StoreActivity.this, camara(StoreActivity.this, data), null).qiNiu(new QiNiuUtil.QiNiuCallBack() {
                         @Override
                         public void onSuccess(String key, ResponseInfo info, JSONObject res) {
-                            if (isCover) {
-                                coverUrl = key;
-                            } else {
-                                listPicUrl.add(key);
+
+                            switch (picFlag){
+                                case "advPic":
+                                    coverUrl = key;
+                                    break;
+
+                                case "license":
+                                    licenseUrl = key;
+                                    break;
+
+                                case "pic":
+                                    listPicUrl.add(key);
+                                    break;
                             }
                         }
                     }, true);
@@ -572,6 +609,7 @@ public class StoreActivity extends MyBaseActivity {
             object.put("userReferee", edtReferrer.getText().toString().trim());
             object.put("slogan", edtSlogan.getText().toString().trim());
             object.put("advPic", coverUrl);
+            object.put("license", licenseUrl);
             object.put("pic", pic.substring(0, pic.length() - 2));
             object.put("description", edtDetail.getText().toString().trim());
             object.put("province", province);
@@ -684,9 +722,12 @@ public class StoreActivity extends MyBaseActivity {
         ImageUtil.glide(model.getAdvPic(), imgCover, this);
         coverUrl = model.getAdvPic();
 
-//        if (!model.getRemark().equals("")) {
-//            txtYijian.setText("审核反馈:" + model.getRemark());
-//        }
+        if (model.getLicense() != null) {
+            if (!model.getLicense().equals("")) {
+                ImageUtil.glide(model.getLicense(), imgLicense, this);
+                licenseUrl = model.getLicense();
+            }
+        }
 
         for (int i = 0; i < list.size(); i++) {
             if (model.getType().equals(list.get(i).getCode())) {

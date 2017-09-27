@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.zhenghui.zhqb.gift.MyBaseActivity;
 import com.zhenghui.zhqb.gift.R;
+import com.zhenghui.zhqb.gift.fragment.DustbinFragment;
 import com.zhenghui.zhqb.gift.fragment.SellFragment;
 import com.zhenghui.zhqb.gift.fragment.SoldOutFragment;
 
@@ -33,8 +34,13 @@ public class ProductManageActivity extends MyBaseActivity {
     View lineSoldOut;
     @BindView(R.id.layout_product)
     FrameLayout layoutProduct;
+    @BindView(R.id.txt_delete)
+    TextView txtDelete;
+    @BindView(R.id.line_delete)
+    View lineDelete;
 
     private SellFragment sellFragment;
+    private DustbinFragment dustbinFragment;
     private SoldOutFragment soldOutFragment;
 
     @Override
@@ -45,7 +51,7 @@ public class ProductManageActivity extends MyBaseActivity {
         setSelect(0);
     }
 
-    @OnClick({R.id.layout_back, R.id.txt_sell, R.id.txt_sold_out})
+    @OnClick({R.id.layout_back, R.id.txt_sell, R.id.txt_sold_out, R.id.txt_delete})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_back:
@@ -59,6 +65,11 @@ public class ProductManageActivity extends MyBaseActivity {
                 break;
             case R.id.txt_sold_out:
                 setSelect(1);
+
+                break;
+
+            case R.id.txt_delete:
+                setSelect(2);
 
                 break;
         }
@@ -100,6 +111,18 @@ public class ProductManageActivity extends MyBaseActivity {
                 lineSoldOut.setBackgroundColor(getResources().getColor(R.color.rose));
                 break;
 
+            case 2:
+                if (dustbinFragment == null) {
+                    dustbinFragment = new DustbinFragment();
+                    transaction.add(R.id.layout_product, dustbinFragment);
+                } else {
+                    transaction.show(dustbinFragment);
+
+                }
+                txtDelete.setTextColor(getResources().getColor(R.color.fontColor_rose));
+                lineDelete.setBackgroundColor(getResources().getColor(R.color.rose));
+                break;
+
             default:
                 break;
         }
@@ -114,6 +137,9 @@ public class ProductManageActivity extends MyBaseActivity {
         if (soldOutFragment != null) {
             transaction.hide(soldOutFragment);
         }
+        if (dustbinFragment != null) {
+            transaction.hide(dustbinFragment);
+        }
     }
 
     private void initLine() {
@@ -121,6 +147,8 @@ public class ProductManageActivity extends MyBaseActivity {
         lineSell.setBackgroundColor(getResources().getColor(R.color.white));
         txtSoldOut.setTextColor(getResources().getColor(R.color.fontColor_gray));
         lineSoldOut.setBackgroundColor(getResources().getColor(R.color.white));
+        txtDelete.setTextColor(getResources().getColor(R.color.fontColor_gray));
+        lineDelete.setBackgroundColor(getResources().getColor(R.color.white));
     }
 
 }

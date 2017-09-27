@@ -27,6 +27,10 @@ public class Constant {
      */
     public static String CODE_802027 = "802027";
     /**
+     *  根据key获取value
+     */
+    public static String CODE_802029 = "802029";
+    /**
      *  列表查询渠道银行
      */
     public static String CODE_802116 = "802116";
@@ -110,6 +114,10 @@ public class Constant {
      */
     public static String CODE_807717 = "807717";
     /**
+     *  获取版本信息
+     */
+    public static String CODE_807718 = "807718";
+    /**
      *  
      */
     public static String CODE_807900 = "807900";
@@ -134,6 +142,14 @@ public class Constant {
      *  下架
      */
     public static String CODE_808014 = "808014";
+    /**
+     *  下架回收
+     */
+    public static String CODE_808016 = "808016";
+    /**
+     *  回收站还原
+     */
+    public static String CODE_808017 = "808017";
     /**
      *  分页查询产品
      */
@@ -218,6 +234,32 @@ public class Constant {
      *  分页查询历史分红权返利记录
      */
     public static String CODE_808428 = "808428";
+    /**
+     *  我的补贴权分页查询
+     */
+    public static String CODE_808457 = "808457";
+    /**
+     *  我的下一个补贴权查询
+     */
+    public static String CODE_808458 = "808458";
+    /**
+     *  分页查询历史分红权返利记录
+     */
+    public static String CODE_808459 = "808459";
+
+    /**
+     *  分页查询补贴权返利记录
+     */
+    public static String CODE_808465 = "808465";
+    /**
+     *  分页查询补贴权返利记录
+     */
+    public static String CODE_808468 = "808468";
+
+    /**
+     *  分红权是否显示
+     */
+    public static String CODE_808917 = "808917";
 
 
 }

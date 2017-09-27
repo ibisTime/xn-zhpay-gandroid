@@ -58,6 +58,8 @@ import static com.zhenghui.zhqb.gift.util.Constant.CODE_808010;
 import static com.zhenghui.zhqb.gift.util.Constant.CODE_808012;
 import static com.zhenghui.zhqb.gift.util.Constant.CODE_808013;
 import static com.zhenghui.zhqb.gift.util.Constant.CODE_808014;
+import static com.zhenghui.zhqb.gift.util.Constant.CODE_808016;
+import static com.zhenghui.zhqb.gift.util.Constant.CODE_808017;
 import static com.zhenghui.zhqb.gift.util.Constant.CODE_808026;
 import static com.zhenghui.zhqb.gift.util.Constant.CODE_808037;
 import static com.zhenghui.zhqb.gift.util.ImageUtil.RESULT_CAMARA_IMAGE;
@@ -246,42 +248,22 @@ public class ProductActivity extends MyBaseActivity {
         btnSend = (Button) footerView.findViewById(R.id.btn_send);
         imgAddParamter = (ImageView) footerView.findViewById(R.id.img_add);
 
-        if (isModifi) {
-            btnSend.setText("保存修改");
-        }
-
-        btnSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (checkData()) {
-                    if ("1".equals(userInfoSp.getString("identityFlag",null))) {
-                        if (isModifi) {
-                            modifi();
-                        } else {
-                            commit();
-                        }
-                    }else {
-                        startActivity(new Intent(ProductActivity.this, AuthenticateActivity.class)
-                                .putExtra("canBack",true));
-                    }
-
-
-                }
-            }
-        });
-
         imgAddParamter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (isModifi) {
-                    startActivityForResult(new Intent(ProductActivity.this, ParameterActivity.class)
-                            .putExtra("orderNo", listParamter.size() + 1)
-                            .putExtra("code", model.getCode())
-                            .putExtra("isModify", isModifi), PARAMETER_ADD);
+                    if(!model.getStatus().equals("9")){
+                        startActivityForResult(new Intent(ProductActivity.this, ParameterActivity.class)
+                                .putExtra("orderNo", listParamter.size() + 1)
+                                .putExtra("code", model.getCode())
+                                .putExtra("isModify", isModifi), PARAMETER_ADD);
+                    }else {
+                        Toast.makeText(ProductActivity.this, "垃圾箱里的商品不可添加或修改规格", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     startActivityForResult(new Intent(ProductActivity.this, ParameterActivity.class), PARAMETER_ADD);
-
                 }
+
             }
         });
     }
@@ -304,10 +286,36 @@ public class ProductActivity extends MyBaseActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                startActivityForResult(new Intent(ProductActivity.this, ParameterActivity.class)
-                        .putExtra("index", (i - 1))
-                        .putExtra("isModify", isModifi)
-                        .putExtra("model", listParamter.get(i - 1)), PARAMETER_DETAIL);
+                if (i == 0){
+                    return;
+                }
+
+                if (i == listParamter.size()+1){
+                    return;
+                }
+
+                if (isModifi) {
+                    if(!model.getStatus().equals("9")){
+                        if (listParamter.size() > 0){
+                            startActivityForResult(new Intent(ProductActivity.this, ParameterActivity.class)
+                                    .putExtra("index", (i - 1))
+                                    .putExtra("isModify", isModifi)
+                                    .putExtra("model", listParamter.get(i - 1)), PARAMETER_DETAIL);
+                        }
+
+                    }else {
+                        Toast.makeText(ProductActivity.this, "垃圾箱里的商品不可添加或修改规格", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    if (listParamter.size() > 0){
+                        startActivityForResult(new Intent(ProductActivity.this, ParameterActivity.class)
+                                .putExtra("index", (i - 1))
+                                .putExtra("isModify", isModifi)
+                                .putExtra("model", listParamter.get(i - 1)), PARAMETER_DETAIL);
+                    }
+
+                }
+
             }
         });
     }
@@ -325,14 +333,28 @@ public class ProductActivity extends MyBaseActivity {
                         soldOut();
                         break;
 
-                    case "上架":
-                        if ("1".equals(userInfoSp.getString("identityFlag",null))) {
-                            putAway();
-                        }else {
-                            startActivity(new Intent(ProductActivity.this, AuthenticateActivity.class)
-                                    .putExtra("canBack",true));
-                        }
+                    case "操作":
+                        showPopup(view);
+                        break;
 
+                    case "还原":
+                        restore();
+                        break;
+
+                    case "发布":
+                        if (checkData()) {
+                            if ("1".equals(userInfoSp.getString("identityFlag",null))) {
+                                commit();
+                                if (isModifi) {
+                                    modifi();
+                                } else {
+                                }
+                            }else {
+                                startActivity(new Intent(ProductActivity.this, AuthenticateActivity.class)
+                                        .putExtra("canBack",true));
+                            }
+
+                        }
                         break;
                 }
                 break;
@@ -905,10 +927,12 @@ public class ProductActivity extends MyBaseActivity {
             if(model.getStatus().equals("3")){ // 已上架
                 txtBtn.setText("下架");
             } else if(model.getStatus().equals("4")){ // 已下架
-                txtBtn.setText("上架");
+                txtBtn.setText("操作");
+            }else if(model.getStatus().equals("9")) { // 已删除
+                txtBtn.setText("还原");
             }
         } else {
-            txtBtn.setVisibility(View.GONE);
+            txtBtn.setText("发布");
         }
 
         ImageUtil.glide(model.getAdvPic(), imgPhoto, this);
@@ -1114,6 +1138,151 @@ public class ProductActivity extends MyBaseActivity {
                 Toast.makeText(ProductActivity.this, "无法连接服务器，请检查网络", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void showPopup(View view) {
+
+        // 一个自定义的布局，作为显示的内容
+        View mview = LayoutInflater.from(this).inflate(R.layout.popup_product, null);
+
+        TextView txtUp = (TextView) mview.findViewById(R.id.txt_up);
+        TextView txtModify = (TextView) mview.findViewById(R.id.txt_modify);
+        TextView txtDelete = (TextView) mview.findViewById(R.id.txt_delete);
+
+        LinearLayout layoutCancel = (LinearLayout) mview.findViewById(R.id.layout_cancel);
+
+        final PopupWindow popupWindow = new PopupWindow(mview,
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
+
+        popupWindow.setTouchable(true);
+        popupWindow.setAnimationStyle(R.style.PopupAnimation);
+
+        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+//                popupWindow.dismiss();
+                return false;
+                // 这里如果返回true的话，touch事件将被拦截
+                // 拦截后 PopupWindow的onTouchEvent不被调用，这样点击外部区域无法dismiss
+            }
+        });
+
+        layoutCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+
+        txtUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if ("1".equals(userInfoSp.getString("identityFlag",null))) {
+                    putAway();
+                }else {
+                    startActivity(new Intent(ProductActivity.this, AuthenticateActivity.class)
+                            .putExtra("canBack",true));
+                }
+                popupWindow.dismiss();
+
+            }
+        });
+
+        txtModify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkData()) {
+                    if ("1".equals(userInfoSp.getString("identityFlag",null))) {
+                        modifi();
+                    }else {
+                        startActivity(new Intent(ProductActivity.this, AuthenticateActivity.class)
+                                .putExtra("canBack",true));
+                    }
+
+                }
+            }
+        });
+
+        txtDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                delete();
+                popupWindow.dismiss();
+
+            }
+        });
+
+
+        // 如果不设置PopupWindow的背景，无论是点击外部区域还是Back键都无法dismiss弹框
+        popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.corners_layout));
+        // 设置好参数之后再show
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 50);
+
+    }
+
+    /**
+     * 删除
+     */
+    public void delete() {
+        JSONObject object = new JSONObject();
+        try {
+            object.put("code", code);
+            object.put("updater", userInfoSp.getString("userId",""));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        new Xutil().post(CODE_808016, object.toString(), new Xutil.XUtils3CallBackPost() {
+            @Override
+            public void onSuccess(String result) {
+                Toast.makeText(ProductActivity.this, "删除成功", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+
+            @Override
+            public void onTip(String tip) {
+                Toast.makeText(ProductActivity.this, tip, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(String error, boolean isOnCallback) {
+                Toast.makeText(ProductActivity.this, "无法连接服务器，请检查网络", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    /**
+     * 还原
+     */
+    public void restore() {
+        JSONObject object = new JSONObject();
+        try {
+            object.put("code", code);
+            object.put("updater", userInfoSp.getString("userId",""));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        new Xutil().post(CODE_808017, object.toString(), new Xutil.XUtils3CallBackPost() {
+            @Override
+            public void onSuccess(String result) {
+                Toast.makeText(ProductActivity.this, "还原成功", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+
+            @Override
+            public void onTip(String tip) {
+                Toast.makeText(ProductActivity.this, tip, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(String error, boolean isOnCallback) {
+                Toast.makeText(ProductActivity.this, "无法连接服务器，请检查网络", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
 }
