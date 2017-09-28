@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="@color/intervalColor"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        >
+
+        <TextView
+            android:id="@+id/txt_sign_out"
+            android:gravity="center"
+            android:text="退出登录"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/fontColor_pink"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
+    <View
+        android:background="@color/lineColor_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <TextView
+        android:layout_marginTop="100dp"
+        android:gravity="center"
+        android:text="您还未添加店铺"
+        android:textSize="18sp"
+        android:textColor="@color/pink"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btn_add"
+        android:text="前往添加"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/pink"
+        android:background="@drawable/corners_btn_oy_cancel"
+        android:layout_width="100dp"
+        android:layout_height="40dp" />
+
+</LinearLayout>

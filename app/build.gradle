@@ -1,0 +1,101 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion '25.0.0'
+    defaultConfig {
+        applicationId "com.zhenghui.zhqb.gift"
+        minSdkVersion 19
+        targetSdkVersion 24
+        versionCode 17
+        versionName "4.2.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        // Enabling multidex support.
+        multiDexEnabled true
+    }
+    buildTypes {
+        release {
+
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            ndk {
+//                abiFilters "armeabi", "armeabi-v7a", "arm64-v8a" // 保留这三种架构的CPU
+//                abiFilters "armeabi-v7a" // 保留这种架构的CPU
+                abiFilters "armeabi" // 保留这种架构的CPU
+            }
+        }
+
+        debug {
+            ndk {
+//                abiFilters "armeabi", "armeabi-v7a", "arm64-v8a" // 保留这三种架构的CPU
+//                abiFilters "armeabi-v7a" // 保留这种架构的CPU
+                abiFilters "armeabi" // 保留这种架构的CPU
+    }
+}
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+//    task nativeLibsToJar(type: Zip, description: "create a jar archive of the native libs") {
+//        destinationDir file("$projectDir/libs")
+//        baseName "Native_Libs2"
+//        extension "jar"
+//        from fileTree(dir: "libs", include: "**/*.so")
+//        into "lib"
+//    }
+//
+//    tasks.withType(JavaCompile) {
+//        compileTask -> compileTask.dependsOn(nativeLibsToJar)
+//    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    // 圆形ImageView
+    // SwitchButton
+    // RecyclerView
+    // 注入式
+    // XUtils3
+    // 七牛
+    // Picasso
+    // Gson
+    // LuBan
+    //    compile 'io.reactivex:rxandroid:1.2.1'
+    //    compile 'io.reactivex:rxjava:1.1.6'
+    //    compile 'top.zibin:Luban:1.0.9'
+    // Compressor
+    // multidex
+    // RichText
+    // citypicker
+    //    compile 'com.zzhoujay.glideimagegetter:glideimagegetter:1.0.1'
+    compile files('libs/AMap3DMap_4.1.3_AMapSearch_3.6.1_AMapLocation_3.2.1_20161228.jar')
+    //    compile project(':easeUI')
+    compile files('libs/jcore-android_v1.1.0.jar')
+    compile files('libs/org.apache.http.legacy.jar')
+    compile 'de.hdodenhof:circleimageview:2.1.0'
+    compile 'com.kyleduo.switchbutton:library:1.4.4'
+    compile 'com.android.support:recyclerview-v7:24.2.1'
+    compile 'com.jakewharton:butterknife:8.4.0'
+    compile 'org.xutils:xutils:3.3.36'
+    compile 'com.qiniu:qiniu-android-sdk:7.3.+'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.google.code.gson:gson:2.8.0'
+    compile 'id.zelory:compressor:1.0.4'
+    compile 'com.android.support:multidex:1.0.1'
+    compile 'com.zzhoujay.richtext:richtext:2.3.7'
+    compile 'liji.library.dev:citypickerview:+'
+    compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.android.support:design:24.2.1'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+}
