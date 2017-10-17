@@ -128,7 +128,7 @@ public class StoreContract2Activity extends MyBaseActivity {
 
     private void tip() {
         new AlertDialog.Builder(this).setTitle("提示")
-                .setMessage("您确定要退出正汇礼品商吗?")
+                .setMessage("您确定要退出"+getString(R.string.app_name)+"吗?")
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

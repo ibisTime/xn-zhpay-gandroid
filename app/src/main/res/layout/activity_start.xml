@@ -10,7 +10,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:background="@mipmap/loading"
+            android:background="@mipmap/loading_hmb"
             android:scaleType="centerCrop"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

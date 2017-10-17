@@ -2,32 +2,6 @@ package com.zhenghui.zhqb.gift.util;
 
 public class BillUtil {
 
-    /**
-     * '11','充值'
-     '-11','取现'
-     '19','蓝补'
-     '-19','红冲'
-     '-30','购物'
-     '30','购物退款'
-     '32','确认收货，商户收钱'
-     '-40','购买折扣券'
-     '-ZH1','正汇O2O支付'
-     '-ZH2','正汇分红权分红'
-     '-50','购买汇赚宝'
-     '51','购买汇赚宝分成'
-     '52','汇赚宝摇一摇奖励'
-     '53','摇一摇分成'
-     '60','发一发得红包'
-     '61','领取红包'
-     '-70','参与小目标'
-     '71','小目标中奖'
-
-     '200','币种兑换'
-
-     * @param bizType
-     * @return
-     */
-
     public static String getBillType(String bizType){
 
         if(bizType.equals("11")){
@@ -67,11 +41,11 @@ public class BillUtil {
         }else if(bizType.equals("200")){
             return "币种兑换";
         }else if(bizType.equals("-ZH1")){
-            return "正汇O2O支付";
+            return "O2O支付";
         }else if(bizType.equals("-ZH2")){
-            return "正汇分红权分红";
+            return "分红权分红";
         }else if(bizType.equals("-ZH3")){
-            return "正汇币种售卖";
+            return "币种售卖";
         }else if(bizType.equals("206")){
             return "C端用户间转账";
         }
