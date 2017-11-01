@@ -1,12 +1,16 @@
 package com.zhenghui.zhqb.gift.activity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -35,6 +39,7 @@ import butterknife.OnClick;
 
 import static com.zhenghui.zhqb.gift.util.Constant.CODE_805043;
 import static com.zhenghui.zhqb.gift.util.Constant.CODE_805056;
+import static com.zhenghui.zhqb.gift.util.Constant.CODE_807717;
 import static com.zhenghui.zhqb.gift.util.Constant.CODE_808219;
 
 public class LoginActivity extends MyBaseActivity {
@@ -56,7 +61,7 @@ public class LoginActivity extends MyBaseActivity {
 
     public static LoginActivity instance;
 
-    public static final String TIP = "tip";
+    private boolean isNeedIdentity = false;
 
     SharedPreferences.Editor editor;
     private boolean isRemenberPwd = false;
@@ -79,6 +84,7 @@ public class LoginActivity extends MyBaseActivity {
         MyApplication.getInstance().addActivity(this);
 
         inits();
+        getDatas();
 
         boxRemenber.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -270,10 +276,14 @@ public class LoginActivity extends MyBaseActivity {
                     UserModel model = gson.fromJson(jsonObject.toString(), new TypeToken<UserModel>() {
                     }.getType());
 
-                    if (model.getIdentityFlag().equals("1")) {
-                        getStroe();
+                    if (isNeedIdentity){
+                        if (model.getIdentityFlag().equals("1")) {
+                            getStroe();
+                        }else {
+                            startActivity(new Intent(LoginActivity.this, AuthenticateActivity.class));
+                        }
                     }else {
-                        startActivity(new Intent(LoginActivity.this, AuthenticateActivity.class));
+                        getStroe();
                     }
 
                 } catch (JSONException e) {
@@ -292,6 +302,75 @@ public class LoginActivity extends MyBaseActivity {
                 Toast.makeText(LoginActivity.this, "无法连接服务器，请检查网络", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    /**
+     * 是否需要强制认证
+     */
+    public void getDatas() {
+        JSONObject object = new JSONObject();
+        try {
+            object.put("ckey", "AUTH_BUSER_IN_APP");
+            object.put("systemCode", appConfigSp.getString("systemCode", null));
+            object.put("companyCode", appConfigSp.getString("systemCode", null));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        new Xutil().post(CODE_807717, object.toString(), new Xutil.XUtils3CallBackPost() {
+            @Override
+            public void onSuccess(String result) {
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+
+                    if (!TextUtils.isEmpty(jsonObject.getString("cvalue"))){
+                        if (jsonObject.getString("cvalue").equals("0")){
+                            isNeedIdentity = false;
+                        }else {
+                            isNeedIdentity = true;
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onTip(String tip) {
+                Toast.makeText(LoginActivity.this, tip, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(String error, boolean isOnCallback) {
+                Toast.makeText(LoginActivity.this, "无法连接服务器，请检查网络", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    /**
+     * 菜单、返回键响应
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // TODO Auto-generated method stub
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            tip();
+        }
+        return false;
+    }
+
+    private void tip() {
+        new AlertDialog.Builder(this).setTitle("提示")
+                .setMessage("您确定要退出"+getString(R.string.app_name)+"吗?")
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                        System.exit(0);
+                    }
+                }).setNegativeButton("取消", null).show();
     }
 
 }

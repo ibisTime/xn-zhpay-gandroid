@@ -7,8 +7,8 @@ android {
         applicationId "com.zhenghui.zhqb.gift"
         minSdkVersion 19
         targetSdkVersion 24
-        versionCode 18
-        versionName "4.3.0"
+        versionCode 20
+        versionName "4.4.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         // Enabling multidex support.

@@ -67,12 +67,16 @@ public class Main2Activity extends MyBaseActivity implements SwipeRefreshLayout.
     TextView txtPrice;
     @BindView(R.id.txt_withdrawal)
     TextView txtWithdrawal;
-    @BindView(R.id.txt_withdrawal_hk)
-    TextView txtWithdrawalHk;
     @BindView(R.id.textView5)
     TextView textView5;
     @BindView(R.id.txt_hk)
     TextView txtHk;
+    @BindView(R.id.txt_withdrawal_hk)
+    TextView txtWithdrawalHk;
+    @BindView(R.id.txt_fr)
+    TextView txtFr;
+    @BindView(R.id.txt_withdrawal_fr)
+    TextView txtWithdrawalFr;
     @BindView(R.id.txt_fhq)
     TextView txtFhq;
     @BindView(R.id.layout_fhq)
@@ -190,7 +194,7 @@ public class Main2Activity extends MyBaseActivity implements SwipeRefreshLayout.
 
     @OnClick({R.id.layout_store, R.id.layout_good, R.id.layout_bill, R.id.layout_order, R.id.txt_notice,
             R.id.layout_account, R.id.txt_withdrawal, R.id.txt_fhq, R.id.txt_account_logout,
-            R.id.txt_account_card, R.id.txt_record, R.id.txt_withdrawal_hk})
+            R.id.txt_account_card, R.id.txt_record, R.id.txt_withdrawal_hk, R.id.txt_withdrawal_fr})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.txt_fhq:
@@ -243,6 +247,23 @@ public class Main2Activity extends MyBaseActivity implements SwipeRefreshLayout.
                     startActivity(new Intent(Main2Activity.this, WithdrawalsActivity.class)
                             .putExtra("balance", accountAmountHk)
                             .putExtra("accountNumber", accountNumberHk));
+
+                } else {
+
+                    Toast.makeText(this, "请先设置支付密码", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(Main2Activity.this, ModifyTradeActivity.class)
+                            .putExtra("phone", userInfoSp.getString("mobile", ""))
+                            .putExtra("isModify", false));
+
+                }
+                break;
+
+            case R.id.txt_withdrawal_fr:
+                if (userInfoSp.getString("tradepwdFlag", "").equals("1")) { // tradepwdFlag 支付密码标示 1有 0 无
+
+                    startActivity(new Intent(Main2Activity.this, WithdrawalsActivity.class)
+                            .putExtra("balance", accountAmountFrb)
+                            .putExtra("accountNumber", accountNumberFrb));
 
                 } else {
 
@@ -431,6 +452,8 @@ public class Main2Activity extends MyBaseActivity implements SwipeRefreshLayout.
                 case "FRB":
                     accountNumberFrb = model.getAccountNumber();
                     accountAmountFrb = model.getAmount();
+
+                    txtFr.setText(NumberUtil.doubleFormatMoney(accountAmountFrb) + "");
                     break;
 
                 case "HKB":
@@ -833,7 +856,7 @@ public class Main2Activity extends MyBaseActivity implements SwipeRefreshLayout.
 
     private void tip() {
         new AlertDialog.Builder(this).setTitle("提示")
-                .setMessage("您确定要退出"+getString(R.string.app_name)+"吗?")
+                .setMessage("您确定要退出" + getString(R.string.app_name) + "吗?")
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

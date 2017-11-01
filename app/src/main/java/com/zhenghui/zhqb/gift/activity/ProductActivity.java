@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -53,6 +54,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.zhenghui.zhqb.gift.util.Constant.CODE_805056;
+import static com.zhenghui.zhqb.gift.util.Constant.CODE_807717;
 import static com.zhenghui.zhqb.gift.util.Constant.CODE_808007;
 import static com.zhenghui.zhqb.gift.util.Constant.CODE_808010;
 import static com.zhenghui.zhqb.gift.util.Constant.CODE_808012;
@@ -99,6 +101,8 @@ public class ProductActivity extends MyBaseActivity {
     private String cover = "";
 
     private boolean isCover = true;
+
+    private boolean isNeedIdentity = false;
 
     // 所有
     private List<ProductTypeModel> typeList;
@@ -147,6 +151,7 @@ public class ProductActivity extends MyBaseActivity {
         initListView();
         initRecyclerView();
 
+        getAUTH();
         getProductType();
     }
 
@@ -342,19 +347,29 @@ public class ProductActivity extends MyBaseActivity {
                         break;
 
                     case "发布":
-                        if (checkData()) {
-                            if ("1".equals(userInfoSp.getString("identityFlag",null))) {
-                                commit();
-                                if (isModifi) {
-                                    modifi();
-                                } else {
+                        if (isNeedIdentity){
+                            if (checkData()) {
+                                if ("1".equals(userInfoSp.getString("identityFlag",null))) {
+                                    commit();
+                                    if (isModifi) {
+                                        modifi();
+                                    } else {
+                                    }
+                                }else {
+                                    startActivity(new Intent(ProductActivity.this, AuthenticateActivity.class)
+                                            .putExtra("canBack",true));
                                 }
-                            }else {
-                                startActivity(new Intent(ProductActivity.this, AuthenticateActivity.class)
-                                        .putExtra("canBack",true));
-                            }
 
+                            }
+                        }else {
+                            commit();
+                            if (isModifi) {
+                                modifi();
+                            } else {
+                            }
                         }
+
+
                         break;
                 }
                 break;
@@ -1178,12 +1193,18 @@ public class ProductActivity extends MyBaseActivity {
         txtUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ("1".equals(userInfoSp.getString("identityFlag",null))) {
-                    putAway();
+                if (isNeedIdentity){
+                    if ("1".equals(userInfoSp.getString("identityFlag",null))) {
+                        putAway();
+                    }else {
+                        startActivity(new Intent(ProductActivity.this, AuthenticateActivity.class)
+                                .putExtra("canBack",true));
+                    }
                 }else {
-                    startActivity(new Intent(ProductActivity.this, AuthenticateActivity.class)
-                            .putExtra("canBack",true));
+                    putAway();
                 }
+
+
                 popupWindow.dismiss();
 
             }
@@ -1193,13 +1214,16 @@ public class ProductActivity extends MyBaseActivity {
             @Override
             public void onClick(View v) {
                 if (checkData()) {
-                    if ("1".equals(userInfoSp.getString("identityFlag",null))) {
-                        modifi();
+                    if (isNeedIdentity){
+                        if ("1".equals(userInfoSp.getString("identityFlag",null))) {
+                            modifi();
+                        }else {
+                            startActivity(new Intent(ProductActivity.this, AuthenticateActivity.class)
+                                    .putExtra("canBack",true));
+                        }
                     }else {
-                        startActivity(new Intent(ProductActivity.this, AuthenticateActivity.class)
-                                .putExtra("canBack",true));
+                        modifi();
                     }
-
                 }
             }
         });
@@ -1270,6 +1294,51 @@ public class ProductActivity extends MyBaseActivity {
             public void onSuccess(String result) {
                 Toast.makeText(ProductActivity.this, "还原成功", Toast.LENGTH_SHORT).show();
                 finish();
+            }
+
+            @Override
+            public void onTip(String tip) {
+                Toast.makeText(ProductActivity.this, tip, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(String error, boolean isOnCallback) {
+                Toast.makeText(ProductActivity.this, "无法连接服务器，请检查网络", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    /**
+     * 是否需要强制认证
+     */
+    public void getAUTH() {
+        JSONObject object = new JSONObject();
+        try {
+            object.put("ckey", "AUTH_BUSER_IN_APP");
+            object.put("systemCode", appConfigSp.getString("systemCode", null));
+            object.put("companyCode", appConfigSp.getString("systemCode", null));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        new Xutil().post(CODE_807717, object.toString(), new Xutil.XUtils3CallBackPost() {
+            @Override
+            public void onSuccess(String result) {
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+
+                    if (!TextUtils.isEmpty(jsonObject.getString("cvalue"))){
+                        if (jsonObject.getString("cvalue").equals("0")){
+                            isNeedIdentity = false;
+                        }else {
+                            isNeedIdentity = true;
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
