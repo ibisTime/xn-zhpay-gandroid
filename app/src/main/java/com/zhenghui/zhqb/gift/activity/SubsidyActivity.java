@@ -77,7 +77,7 @@ public class SubsidyActivity extends MyBaseActivity implements SwipeRefreshLayou
         initRefreshLayout();
 
         getData();
-        getLimit();
+        getTotalLimit();
         getProperty();
         getIsShow();
     }
@@ -205,45 +205,6 @@ public class SubsidyActivity extends MyBaseActivity implements SwipeRefreshLayou
         });
     }
 
-    /**
-     * 查询所需消费额
-     */
-    private void getLimit() {
-
-        JSONObject object = new JSONObject();
-        try {
-            object.put("userId", userInfoSp.getString("userId", null));
-            object.put("token", userInfoSp.getString("token", null));
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        new Xutil().post(CODE_808458, object.toString(), new Xutil.XUtils3CallBackPost() {
-            @Override
-            public void onSuccess(String result) {
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    txtTurnover.setText(NumberUtil.doubleFormatMoney(500000 - jsonObject.getDouble("costAmount")));
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void onTip(String tip) {
-                Toast.makeText(SubsidyActivity.this, tip, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onError(String error, boolean isOnCallback) {
-                Toast.makeText(SubsidyActivity.this, "无法连接服务器，请检查网络", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
     private void getData() {
 
         JSONObject object = new JSONObject();
@@ -272,6 +233,85 @@ public class SubsidyActivity extends MyBaseActivity implements SwipeRefreshLayou
                     }
                     list.addAll(lists);
                     adapter.notifyDataSetChanged();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onTip(String tip) {
+                Toast.makeText(SubsidyActivity.this, tip, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(String error, boolean isOnCallback) {
+                Toast.makeText(SubsidyActivity.this, "无法连接服务器，请检查网络", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void getTotalLimit() {
+
+        JSONObject object = new JSONObject();
+        try {
+            object.put("key", "CUSER_BUY_AMOUNT");
+            object.put("systemCode", appConfigSp.getString("systemCode", null));
+            object.put("companyCode", appConfigSp.getString("systemCode", null));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        new Xutil().post(CODE_808917, object.toString(), new Xutil.XUtils3CallBackPost() {
+            @Override
+            public void onSuccess(String result) {
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+
+                    txtTurnover.setText(jsonObject.getString("cvalue"));
+                    int num = Integer.parseInt(jsonObject.getString("cvalue")) * 1000;
+
+                    getLimit(num);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onTip(String tip) {
+                Toast.makeText(SubsidyActivity.this, tip, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(String error, boolean isOnCallback) {
+                Toast.makeText(SubsidyActivity.this, "无法连接服务器，请检查网络", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    /**
+     * 查询所需消费额
+     */
+    private void getLimit(final int num) {
+
+        JSONObject object = new JSONObject();
+        try {
+            object.put("userId", userInfoSp.getString("userId", null));
+            object.put("token", userInfoSp.getString("token", null));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        new Xutil().post(CODE_808458, object.toString(), new Xutil.XUtils3CallBackPost() {
+            @Override
+            public void onSuccess(String result) {
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    txtTurnover.setText(NumberUtil.doubleFormatMoney(num - jsonObject.getDouble("costAmount")));
 
                 } catch (JSONException e) {
                     e.printStackTrace();

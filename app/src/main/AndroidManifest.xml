@@ -146,7 +146,7 @@
         <!-- 设置高德地图的AppKey -->
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="7c2639572d8d45861d901e54c6354cc9" />
+            android:value="e251097dc465519d20a46325fd6260d4" />
         <!-- 定位需要的服务 -->
         <service android:name="com.amap.api.location.APSService" />
 
@@ -214,7 +214,7 @@
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.zhenghui.zhqb.gift.fileprovider"
+            android:authorities="com.zhenghui.zhqb.gift2.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
